@@ -6,10 +6,29 @@ class AdMob_Helper
   AdMob_Helper._();
 
 
+  AppOpenAd? appOpenAd;
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
+  RewardedAd? rewardedAd;
 
 
+  void loadAppOpenAds()
+  {
+   AppOpenAd.load(
+      adUnitId: "ca-app-pub-3940256099942544/3419835294",
+      request:  AdRequest(),
+      orientation: AppOpenAd.orientationPortrait,
+      adLoadCallback: AppOpenAdLoadCallback(
+          onAdLoaded: (ad) {
+            appOpenAd = ad;
+            },
+      onAdFailedToLoad: (error) {
+          print('AppOpenAd failed to load: $error');
+            },
+    ),
+   );
+
+  }
   void loadBannerAds()
   {
     bannerAd = BannerAd(
@@ -36,6 +55,35 @@ class AdMob_Helper
                 onAdFailedToLoad: (LoadAdError error) {
                   print('InterstitialAd failed to load: $error');
               }
+        ),
+    );
+
+  }
+
+  void loadRewardAds()
+  {
+    RewardedAd.load(
+        adUnitId: "ca-app-pub-3940256099942544/5224354917",
+        request: AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+
+              onAdFailedToShowFullScreenContent: (ad, error) {
+                ad.dispose();
+              },
+
+              onAdDismissedFullScreenContent: (ad) {
+                ad.dispose();
+              },
+            );
+            rewardedAd = ad;
+            print("data got...........reward.......");
+          },
+
+          onAdFailedToLoad: (error) {
+            print('@@@@@@@@@@@    RewardAd failed to load: $error');
+          },
         ),
     );
 

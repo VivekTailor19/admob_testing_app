@@ -15,8 +15,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
+    AdMob_Helper.adMob_helper.loadAppOpenAds();
     AdMob_Helper.adMob_helper.loadBannerAds();
     AdMob_Helper.adMob_helper.loadInterstitialAds();
+    AdMob_Helper.adMob_helper.loadRewardAds();
   }
   @override
   Widget build(BuildContext context) {
@@ -25,23 +27,41 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(title: Text("AdMob Testing"),centerTitle: true,elevation: 0,),
 
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-              TextButton(onPressed: () {
-                if(AdMob_Helper.adMob_helper.interstitialAd != null)
-                  {
-                    AdMob_Helper.adMob_helper.interstitialAd!.show();
-                    AdMob_Helper.adMob_helper.loadInterstitialAds();
-                  }
-
-              }, child: Text(".......Interstitial Ads.........",style: TextStyle(fontSize: 25,color: Colors.amber.shade900,backgroundColor: Colors.black),))
-            ],),
 
             Container(height: 250,width: 350,
               alignment: Alignment.center,
               child: AdWidget(ad: AdMob_Helper.adMob_helper.bannerAd!),
-              )
+            ),
+
+            Divider(height:30),
+
+            TextButton(onPressed: () {
+              if(AdMob_Helper.adMob_helper.interstitialAd != null)
+                {
+                  AdMob_Helper.adMob_helper.interstitialAd!.show();
+                  AdMob_Helper.adMob_helper.loadInterstitialAds();
+                }
+
+            }, child: Text(".......Interstitial Ads.........",style: TextStyle(fontSize: 25,color: Colors.amber.shade900,backgroundColor: Colors.black),)),
+            TextButton(onPressed: () {
+              if(AdMob_Helper.adMob_helper.rewardedAd != null)
+                {
+                  AdMob_Helper.adMob_helper.rewardedAd!.show(onUserEarnedReward: (ad, reward) {},);
+                  AdMob_Helper.adMob_helper.loadRewardAds();
+                }
+            }, child: Text(".......Reward Ads.........",style: TextStyle(fontSize: 25,color: Colors.amber.shade900,backgroundColor: Colors.black),)),
+            TextButton(onPressed: () {
+              if(AdMob_Helper.adMob_helper.appOpenAd != null)
+                {
+                  AdMob_Helper.adMob_helper.appOpenAd!.show();
+                  AdMob_Helper.adMob_helper.loadAppOpenAds();
+                }
+            }, child: Text(".......AppOpen Ads.........",style: TextStyle(fontSize: 25,color: Colors.amber.shade900,backgroundColor: Colors.black),)),
+
+
 
           ],
         ),
