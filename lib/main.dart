@@ -1,3 +1,4 @@
+import 'package:admob_testing_app/screen/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -12,7 +13,8 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     routes: {
-      "/":(context) => HomeScreen(),
+      "/":(context) => SplashScreen(),
+      "home":(context) => HomeScreen(),
     },
   ),
   );

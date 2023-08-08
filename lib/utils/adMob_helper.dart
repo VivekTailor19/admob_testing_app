@@ -10,6 +10,7 @@ class AdMob_Helper
   BannerAd? bannerAd;
   InterstitialAd? interstitialAd;
   RewardedAd? rewardedAd;
+  NativeAd? nativeAd;
 
 
   void loadAppOpenAds()
@@ -87,6 +88,29 @@ class AdMob_Helper
         ),
     );
 
+  }
+
+  void loadNativeAds()
+  {
+    nativeAd = NativeAd(
+        adUnitId: "ca-app-pub-3940256099942544/2247696110",
+        factoryId: "listTile",
+        listener: NativeAdListener(
+          onAdLoaded: (ad) {
+           print('nativeAd loaded.');
+
+           nativeAd = ad as NativeAd? ;
+
+          },
+          onAdFailedToLoad: (ad, error) {
+            print('nativeAd failed to load: $error');
+            ad.dispose();
+          },
+        ),
+        request: AdRequest()
+    );
+
+    nativeAd!.load();
   }
 
 
