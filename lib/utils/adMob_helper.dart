@@ -1,9 +1,14 @@
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import '../controller.dart';
 
 class AdMob_Helper
 {
   static final adMob_helper = AdMob_Helper._();
   AdMob_Helper._();
+
+  AdmobController control = Get.put(AdmobController());
 
 
   AppOpenAd? appOpenAd;
@@ -99,6 +104,7 @@ class AdMob_Helper
           onAdLoaded: (ad) {
            print('nativeAd loaded.');
 
+           control.isNativeAdLoaded.value = true;
            nativeAd = ad as NativeAd? ;
 
           },

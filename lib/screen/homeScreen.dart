@@ -1,5 +1,7 @@
+import 'package:admob_testing_app/controller.dart';
 import 'package:admob_testing_app/utils/adMob_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  AdmobController control = Get.put(AdmobController());
   @override
   void initState() {
     super.initState();
@@ -20,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
     AdMob_Helper.adMob_helper.loadInterstitialAds();
     AdMob_Helper.adMob_helper.loadRewardAds();
     AdMob_Helper.adMob_helper.loadNativeAds();
+
+
   }
   @override
   Widget build(BuildContext context) {
@@ -64,9 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
             }, child: Text(".......AppOpen Ads.........",style: TextStyle(fontSize: 25,color: Colors.amber.shade900,backgroundColor: Colors.black),)),
 
-            Container(height: 240,width: 350,
-              alignment: Alignment.center,
-              child: AdWidget(ad: AdMob_Helper.adMob_helper.nativeAd!),
+            Obx(
+              () =>  control.isNativeAdLoaded.value
+                  ? Container(height: 240,width: 350,
+                alignment: Alignment.center,
+                child: AdWidget(ad: AdMob_Helper.adMob_helper.nativeAd!),
+              )
+                  : CircularProgressIndicator(),
             ),
 
 

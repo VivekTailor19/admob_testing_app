@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utils/adMob_helper.dart';
 
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         AdMob_Helper.adMob_helper.appOpenAd!.show();
         AdMob_Helper.adMob_helper.loadAppOpenAds();
       }
-      Navigator.pushNamed(context, "home");
+      Get.toNamed("home");
 
     });
 
